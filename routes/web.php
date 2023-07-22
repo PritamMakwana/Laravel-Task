@@ -16,32 +16,27 @@ use App\Http\Controllers\CrmController;
 |
 */
 
-
-
-
 Route::controller(CustomAuthController::class)->group(function () {
     //login
-    Route::get('login','login')->middleware('AlreadyLoggedIn');
-    Route::post('login','loginUser')->name('login-user');
+    Route::get('login', 'login')->middleware('AlreadyLoggedIn');
+    Route::post('login', 'loginUser')->name('login-user');
     //logout
-    Route::get('logout','logout');
+    Route::get('logout', 'logout');
 });
 
 
+Route::middleware(['isLoggedIn'])->group(function () {
 
-Route::middleware(['isLoggedIn'])->group( function(){
+    Route::controller(CrmController::class)->group(function () {
 
-Route::controller(CrmController::class)->group(function () {
+        //dashboard
+        Route::get('/', 'index');
+        Route::get('dashboard', 'index');
 
-    Route::get('/','index');
-    Route::get('dashboard','index');
+        //payment
+        Route::get('payment', 'payment');
+        Route::post('charge', 'charge');
 
-    Route::get('payment','payment');
+    });
 
 });
-
-});
-
-
-
-

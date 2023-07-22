@@ -4,33 +4,112 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="row">
 
+    {{-- payment form --}}
+    <form action="/charge" method="post" id="payment-form">
+        @csrf
 
-      <!-- leads -->
-      <div class="col-lg-6 mb-4 order-0">
-        <div class="card">
-          <div class="d-flex align-items-end row">
-            <div class="col-sm-7">
-              <div class="card-body">
-                <h5 class="card-title text-primary">Payment</h5>
-                <p class="mb-4 fs-1">
-                  <?php echo 1; ?>
-                </p>
+        @if(Session::has('success'))
+        <div class="alert alert-success">{{Session::get('success')}}</div>
+        @endif
 
-                <a href="lead.php" class="btn btn-sm btn-outline-primary">View All</a>
-              </div>
-            </div>
-            <div class="col-sm-5 text-center text-sm-left">
-              <div class="card-body pb-0 px-0 px-md-4">
-                <img src="assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User"
-                  data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                  data-app-light-img="illustrations/man-with-laptop-light.png" />
-              </div>
-            </div>
-          </div>
+        <div class="form-row">
+            <label for="amount" class="">Amount</label>
+            <input type="number" class="form-control mb-2 mt-2" name="amount" id="amount"
+                placeholder="Enter amount in USD" required>
         </div>
-      </div>
+
+        <div class="form-row">
+            <label for="card-element ">
+                Credit or debit card
+            </label>
+            <div id="card-element" class="form-control mb-3 mt-3">
+                <!-- A Stripe Element will be inserted here. -->
+            </div>
+
+            <!-- Used to display form errors. -->
+            <div id="card-errors" role="alert" class="text-danger m-3"></div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Payment</button>
+    </form>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        var stripe = Stripe('pk_test_51NWe4hEX64qUOM5Zkg7fvZs7lP567gdegOftx6I31bhTffTD3dR43tXxjZGdxFXMVLa8qBBoaadvI0f0W4f1IHsF00ufa36Zhh');
+        var elements = stripe.elements();
+
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        // Handle form submission.
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            form.submit();
+        }
+    </script>
+    {{-- payment form end--}}
+
+
+
+    {{-- payments History --}}
+    <hr class="my-5" />
+
+    <div class="card">
+        <h5 class="card-header">Payments</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr class="text-nowrap">
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Amount</th>
+                        <th>Currency</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $i = 0;
+                    @endphp
+                    @foreach($charges->data as $charge)
+                    <tr>
+                        <td>{{ ++$i }}</td>
+                        <td>{{ $charge->id }}</td>
+                        <td>{{ "$ ".$charge->amount / 100 }}</td>
+                        <td>{{ $charge->currency }}</td>
+                        <td>{{ $charge->status }}</td>
+                        <td>{{ date('d-m-Y | H:i:s A', $charge->created) }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+    {{-- payments History end --}}
+
+
 </div>
 @endsection
