@@ -16,9 +16,7 @@ use App\Http\Controllers\CrmController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 
 Route::controller(CustomAuthController::class)->group(function () {
@@ -34,7 +32,12 @@ Route::controller(CustomAuthController::class)->group(function () {
 Route::middleware(['isLoggedIn'])->group( function(){
 
 Route::controller(CrmController::class)->group(function () {
+
+    Route::get('/','index');
     Route::get('dashboard','index');
+
+    Route::get('payment','payment');
+
 });
 
 });

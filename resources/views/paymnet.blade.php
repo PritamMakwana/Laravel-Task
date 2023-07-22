@@ -1,6 +1,6 @@
 @extends('include.admin')
 
-@section('title','Dashboard')
+@section('title','Payment')
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -13,7 +13,7 @@
           <div class="d-flex align-items-end row">
             <div class="col-sm-7">
               <div class="card-body">
-                <h5 class="card-title text-primary">Leads</h5>
+                <h5 class="card-title text-primary">Payment</h5>
                 <p class="mb-4 fs-1">
                   <?php echo 1; ?>
                 </p>
