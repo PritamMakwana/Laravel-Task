@@ -27,6 +27,7 @@ Route::controller(CustomAuthController::class)->group(function () {
 
 Route::middleware(['isLoggedIn'])->group(function () {
 
+    //dashboard and payment
     Route::controller(CrmController::class)->group(function () {
 
         //dashboard
@@ -36,6 +37,24 @@ Route::middleware(['isLoggedIn'])->group(function () {
         //payment
         Route::get('payment', 'payment');
         Route::post('charge', 'charge');
+
+    });
+
+
+
+    // company
+    Route::controller(App\Http\Controllers\CompaniesController::class)->group(function () {
+
+        //show
+        Route::get('companies', 'index');
+        // add
+        Route::get('companies/create', 'create');
+        Route::post('companies/create', 'createData');
+        //edit
+        Route::get('companies/{company_id}/edit','edit');
+        Route::put('companies/{company_id}/edit','update');
+        //delete
+        Route::get('companies/{company_id}/delete','destroy');
 
     });
 

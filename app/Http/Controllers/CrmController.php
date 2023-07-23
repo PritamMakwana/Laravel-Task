@@ -18,9 +18,9 @@ class CrmController extends Controller
     {
         Stripe::setApiKey('sk_test_51NWe4hEX64qUOM5ZGPwvPmDTiYTp5DMV7Xb2DgN6DoGlgeuvrXEGbsXHUSqUfF2FSwd8AbGOgmQ2h3S83Ppr0Y7q00r4lryVgm');
 
-        $charges = Charge::all(['limit' => 10]); // retrieves the last 10 payments, adjust as needed
+        $charges = Charge::all();
 
-        return view('paymnet', compact('charges'));
+        return view('payment', compact('charges'));
     }
 
     public function charge(Request $request)

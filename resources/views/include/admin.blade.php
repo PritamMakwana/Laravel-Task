@@ -95,12 +95,21 @@
               </a>
             </li>
 
+            {{-- payment --}}
             <li class="menu-item {{Request::is('payment*') ? 'active':''}} ">
               <a href="{{url('/payment')}}" class="menu-link">
               <i class='menu-icon tf-icons bx bx-wallet-alt'></i>
                 <div>Payment</div>
               </a>
            </li>
+
+
+           <li class="menu-item {{Request::is('companies*') ? 'active':''}} ">
+            <a href="{{url('/companies')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+              <div>Companies</div>
+            </a>
+         </li>
 
 <!-- lead management -->
             {{-- <li class="menu-item
