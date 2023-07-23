@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Employees;
 
 class Companies extends Model
 {
@@ -17,4 +18,10 @@ class Companies extends Model
         'logo',
         'website'
     ];
+
+
+    public function foreignEmployee(){
+        return $this->hasMany(Employees::class,'company','id');
+    }
+
 }

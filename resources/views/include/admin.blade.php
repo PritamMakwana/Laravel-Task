@@ -111,6 +111,13 @@
             </a>
          </li>
 
+         <li class="menu-item {{Request::is('employees*') ? 'active':''}} ">
+            <a href="{{url('/employees')}}" class="menu-link">
+                <i class='menu-icon tf-icons bx bxs-user-detail'></i>
+              <div>Employees</div>
+            </a>
+         </li>
+
 <!-- lead management -->
             {{-- <li class="menu-item
             <?php

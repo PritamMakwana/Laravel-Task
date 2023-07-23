@@ -58,4 +58,24 @@ Route::middleware(['isLoggedIn'])->group(function () {
 
     });
 
+
+
+    //Employees
+    Route::controller(App\Http\Controllers\EmployeesController::class)->group(function () {
+
+
+        //show
+        Route::get('employees', 'index');
+        // add
+        Route::get('employees/create', 'create');
+        Route::post('employees/create', 'createData');
+        // //edit
+        Route::get('employees/{employee_id}/edit','edit');
+        Route::put('employees/{employee_id}/edit','update');
+        //delete
+        Route::get('employees/{employee_id}/delete','destroy');
+
+    });
+
+
 });
