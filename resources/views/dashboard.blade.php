@@ -7,18 +7,17 @@
     <div class="row">
 
 
-      <!-- leads -->
       <div class="col-lg-6 mb-4 order-0">
         <div class="card">
           <div class="d-flex align-items-end row">
             <div class="col-sm-7">
               <div class="card-body">
-                <h5 class="card-title text-primary">Leads</h5>
+                <h5 class="card-title text-primary">Employees</h5>
                 <p class="mb-4 fs-1">
-                  <?php echo 1; ?>
+                  {{ $employees }}
                 </p>
 
-                <a href="lead.php" class="btn btn-sm btn-outline-primary">View All</a>
+                <a href="{{url('/employees')}}" class="btn btn-sm btn-outline-primary">View All</a>
               </div>
             </div>
             <div class="col-sm-5 text-center text-sm-left">
@@ -31,6 +30,25 @@
           </div>
         </div>
       </div>
+
+      <div class="col-lg-6 mb-4 order-0">
+        <div class="card">
+          <div class="d-flex align-items-end row">
+            <div class="col-sm-7">
+              <div class="card-body">
+                <h5 class="card-title text-primary">Companies</h5>
+                <p class="mb-4 fs-1">
+                  {{ $companies }}
+                </p>
+
+                <a href="{{url('/companies')}}" class="btn btn-sm btn-outline-primary">View All</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
 </div>
 @endsection

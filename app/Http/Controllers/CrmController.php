@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Stripe\Stripe;
 use Stripe\Charge;
+use Stripe\Stripe;
+
+use App\Models\Companies;
+use App\Models\Employees;
+use Illuminate\Http\Request;
 
 class CrmController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $employees = Employees::count();
+        $companies = Companies::count();
+        return view('dashboard',compact('employees','companies'));
     }
 
     public function payment()
